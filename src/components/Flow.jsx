@@ -1,14 +1,39 @@
-import ReactFlow, { Controls, Background, BackgroundVariant } from 'reactflow'
-import 'reactflow/dist/style.css'
+import { useCallback, useState } from 'react'
+import { initialNodes } from '../constants/initialNodes'
+import { initialEdges } from '../constants/initialEdges'
+import ReactFlow, {
+  applyEdgeChanges,
+  applyNodeChanges,
+  Background,
+  Controls,
+} from 'reactflow'
 
 function Flow() {
+  const [nodes, setNodes] = useState(initialNodes)
+  const [edges, setEdges] = useState(initialEdges)
+
+  const onNodesChange = useCallback(
+    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
+    []
+  )
+  const onEdgesChange = useCallback(
+    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
+  )
+
   return (
-    <>
-      <ReactFlow>
-        <Background color='red' variant={BackgroundVariant.Dots} />
+    <div style={{ height: '100%' }}>
+      <ReactFlow
+        nodes={nodes}
+        onNodesChange={onNodesChange}
+        edges={edges}
+        onEdgesChange={onEdgesChange}
+        fitView
+      >
+        <Background />
         <Controls />
       </ReactFlow>
-    </>
+    </div>
   )
 }
 
