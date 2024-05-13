@@ -31,7 +31,7 @@ export default function Flow() {
 
   // Fonction pour ajouter un nœud
   const handleAddNode = () => {
-    setNodes((nds) => nds.concat({...formValues, position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight }, id: Date.now().toString(), data: { label: formValues.label } }));
+    setNodes((nds) => nds.concat({...formValues, position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight }, id: nodes.length + 1, data: { label: formValues.label } }));
     setFormValues({ label: '', id: ''});
   };
 
@@ -47,7 +47,7 @@ export default function Flow() {
 
   // Fonction pour ajouter une arête
   const handleAddEdge = () => {
-    setEdges((eds) => eds.concat({...formValues, id: Date.now().toString(), source: formValues.source, target: formValues.target }));
+    setEdges((eds) => eds.concat({...formValues, id: 'e' + formValues.source + '-' + formValues.target, source: formValues.source, target: formValues.target }));
     setFormValues({ id: '', source: '', target: '' });
   };
 
