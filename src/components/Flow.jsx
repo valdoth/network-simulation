@@ -60,22 +60,34 @@ export default function Flow() {
   console.log(edges);
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
+    <div className="flex h-screen flex-column item-center justify-center bg-red">
       {/* Formulaire pour ajouter, supprimer et modifier les nœuds et les arêtes */}
-      <div style={{ width: '30%', borderRight: '1px solid #ccc', padding: '20px' }}>
-        <input type="text" value={formValues.label} onChange={(e) => setFormValues({...formValues, label: e.target.value })} placeholder="Label" />
-        <button onClick={handleAddNode}>Ajouter un nœud</button>
-        <input type="text" value={formValues.id} onChange={(e) => setFormValues({...formValues, id: e.target.value })} placeholder="id" />
-        <button onClick={() => handleDeleteNode(formValues.id)}>Supprimer un nœud</button>
-        <input type="text" value={formValues.source} onChange={(e) => setFormValues({...formValues, source: e.target.value })} placeholder="Source" />
-        <input type="text" value={formValues.target} onChange={(e) => setFormValues({...formValues, target: e.target.value })} placeholder="Target" />
-        <button onClick={handleAddEdge}>Ajouter une arête</button>
-        <input type="text" value={formValues.id} onChange={(e) => setFormValues({...formValues, id: e.target.value })} placeholder="id" />
-        <button onClick={() => handleDeleteEdge(formValues.id)}>Supprimer une arête</button>
+      <div className="w-full border-r border-gray-300 p-5 bg-blue-500" style={{height: '20vh'}}>
+        {/* Ajouter un nœud */}
+        <div className="mb-4">
+          <input type="text" value={formValues.label} onChange={(e) => setFormValues({...formValues, label: e.target.value })} placeholder="Label" className="w-full border border-gray-300 p-2 mb-2 rounded" />
+          <button onClick={handleAddNode} className="bg-blue-500 text-white px-4 py-2 rounded mt-2">Ajouter un nœud</button>
+        </div>
+        {/* Supprimer un nœud */}
+        <div className="mb-4">
+          <input type="text" value={formValues.id} onChange={(e) => setFormValues({...formValues, id: e.target.value })} placeholder="id" className="w-full border border-gray-300 p-2 mb-2 rounded" />
+          <button onClick={() => handleDeleteNode(formValues.id)} className="bg-red-500 text-white px-4 py-2 rounded mt-2">Supprimer un nœud</button>
+        </div>
+        {/* Ajouter une arête */}
+        <div className="mb-4">
+          <input type="text" value={formValues.source} onChange={(e) => setFormValues({...formValues, source: e.target.value })} placeholder="Source" className="w-full border border-gray-300 p-2 mb-2 rounded" />
+          <input type="text" value={formValues.target} onChange={(e) => setFormValues({...formValues, target: e.target.value })} placeholder="Target" className="w-full border border-gray-300 p-2 mb-2 rounded mt-2" />
+          <button onClick={handleAddEdge} className="bg-green-500 text-white px-4 py-2 rounded mt-2">Ajouter une arête</button>
+        </div>
+        {/* Supprimer une arête */}
+        <div className="mb-4">
+          <input type="text" value={formValues.id} onChange={(e) => setFormValues({...formValues, id: e.target.value })} placeholder="id" className="w-full border border-gray-300 p-2 mb-2 rounded" />
+          <button onClick={() => handleDeleteEdge(formValues.id)} className="bg-red-500 text-white px-4 py-2 rounded mt-2">Supprimer une arête</button>
+        </div>
       </div>
-
+  
       {/* Zone de visualisation de ReactFlow */}
-      <div style={{ flex: 1, overflow: 'auto' }}>
+      <div className="main-app">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -90,4 +102,5 @@ export default function Flow() {
       </div>
     </div>
   );
+  
 }
