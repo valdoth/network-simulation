@@ -31,8 +31,8 @@ export default function Flow() {
 
   // Fonction pour ajouter un nœud
   const handleAddNode = () => {
-    setNodes((nds) => nds.concat({...formValues, position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight }, id: nodes.length + 1, data: { label: formValues.label } }));
-    setFormValues({ label: '', id: ''});
+    setNodes((nds) => nds.concat({ id: (nodes.length + 1).toString(), position: { x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight }, data: { label: formValues.label }, width: 0, height: 0 }));
+    setFormValues({ label: '', id: '', source: '', target: '' });
   };
 
   // Fonction pour supprimer un nœud
@@ -47,8 +47,8 @@ export default function Flow() {
 
   // Fonction pour ajouter une arête
   const handleAddEdge = () => {
-    setEdges((eds) => eds.concat({...formValues, id: 'e' + formValues.source + '-' + formValues.target, source: formValues.source, target: formValues.target }));
-    setFormValues({ id: '', source: '', target: '' });
+    setEdges((eds) => eds.concat({ id: 'e' + formValues.source + '-' + formValues.target, source: formValues.source, target: formValues.target }));
+    setFormValues({ label: '', id: '', source: '', target: '' });
   };
 
   // Fonction pour supprimer une arête
