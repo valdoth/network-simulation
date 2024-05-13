@@ -150,6 +150,7 @@ export default function Flow() {
     })
     const data = await response.json()
     console.log(data)
+    setPath(data.result)
   }
 
   const handleFindPath = () => {
@@ -205,6 +206,21 @@ export default function Flow() {
 
   // console.log(nodes)
   // console.log(edges)
+
+  const getColor = (name) => {
+    // console.log(name.data.label)
+    if (path.includes(name.data.label)) {
+      return 'green'
+    }
+    return 'red'
+  }
+  const edgeAnimated = (edge) => {
+    console.log(edge)
+    if (path.includes(edge.source) && path.includes(edge.target)) {
+      return true
+    }
+    return false
+  }
 
   return (
     <div className='flex h-screen flex-column item-center justify-center bg-red'>
@@ -367,8 +383,19 @@ export default function Flow() {
       {/* Zone de visualisation de ReactFlow */}
       <div className='main-app'>
         <ReactFlow
-          nodes={nodes}
-          edges={edges}
+          nodes={nodes.map((node) => ({
+            ...node,
+            style: {
+              background: getColor(node),
+              color: 'white',
+              fontSize: 20,
+              fontWeight: 'bold',
+            },
+          }))}
+          edges={edges.map((edge) => ({
+            ...edge,
+            animated: edgeAnimated(edge),
+          }))}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
