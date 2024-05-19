@@ -8,6 +8,7 @@ import ReactFlow, {
   addEdge,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
+import CustomEdge from './CustomEdge'
 
 let initialNodes = []
 let initialEdges = []
@@ -177,14 +178,17 @@ export default function Flow() {
     setEdges((prevEdges) => [
       ...prevEdges,
       {
-        id: 'reactflow__edge-' + formValues.source + '-' + formValues.target,
+        id: formValues.source + '-' + formValues.target,
         source: formValues.source,
         target: formValues.target,
         label: formValues.weight,
         type: 'smoothstep',
+        labelStyle: {
+          color: 'crimson',
+          fontSize: '20px',
+        },
         style: {
-          stroke: 'crimson',
-          strokeWidth: '4',
+          stroke: 'blue',
         },
       },
     ])
