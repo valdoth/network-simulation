@@ -12,8 +12,6 @@ CORS(app, supports_credentials=True, methods=["GET", "POST", "OPTIONS"])
 # Initialize the graph
 G = nx.Graph()
 
-# Your existing functions here (add_node, remove_node, add_edge, remove_edge, modify_node, dijkstra_networkx, display_graph)
-
 
 # Fonction pour ajouter un nœud
 def add_node(G, node_name, values):
@@ -38,6 +36,8 @@ def add_edge(G, node1, node2, weight=0):
 
 # Fonction pour supprimer une arête
 def remove_edge(G, node1, node2):
+    G.remove_edge(node1, node2)
+    pass
     if G.has_edge(node1, node2):
         G.remove_edge(node1, node2)
         print(f"Edge between '{node1}' and '{node2}' removed.")

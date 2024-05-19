@@ -406,6 +406,7 @@ export default function Flow() {
             ...edge,
             animated: edgeAnimated(edge),
             style: {
+              stroke: 'crimson',
               strokeWidth: '6',
             },
           }))}
