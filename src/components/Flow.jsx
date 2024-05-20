@@ -247,11 +247,11 @@ export default function Flow() {
   return (
     <div className='flex'>
       <div
-        className='border-r border-gray-300 p-2 flex-row'
+        className='border-r border-gray-300 flex-row m-4'
         style={{ height: '20vh' }}
       >
         <div className='mb-2'>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formValues.label}
@@ -262,11 +262,11 @@ export default function Flow() {
                   values: formValues.values,
                 })
               }
-              placeholder='Label'
-              className='border border-gray-300 p-2 rounded'
+              placeholder='Server Name'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formValues.values}
@@ -277,21 +277,21 @@ export default function Flow() {
                   label: formValues.label,
                 })
               }
-              placeholder='Values'
-              className='border border-gray-300 p-2 rounded'
+              placeholder='Domaine Name'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
           <button
             onClick={handleAddNode}
             type='button'
-            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
+            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded w-full-lg text-sm px-5 py-1.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-full'
           >
             Ajouter un nœud
           </button>
         </div>
 
         <div className='mb-2'>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formValues.id}
@@ -299,19 +299,19 @@ export default function Flow() {
                 setFormValues({ ...formValues, id: e.target.value })
               }
               placeholder='id'
-              className='border border-gray-300 p-2 rounded'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
           <button
             onClick={handleDeleteNode}
-            className='bg-red-500 text-white px-4 py-2 rounded'
+            className='bg-red-500 text-white px-4 py-1 rounded w-full'
           >
             Supprimer un nœud
           </button>
         </div>
 
         <div className='mb-2'>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formValues.source}
@@ -319,10 +319,10 @@ export default function Flow() {
                 setFormValues({ ...formValues, source: e.target.value })
               }
               placeholder='Source'
-              className='border border-gray-300 p-2 rounded'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formValues.target}
@@ -330,10 +330,10 @@ export default function Flow() {
                 setFormValues({ ...formValues, target: e.target.value })
               }
               placeholder='Target'
-              className='border border-gray-300 p-2 rounded'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formValues.weight}
@@ -341,19 +341,19 @@ export default function Flow() {
                 setFormValues({ ...formValues, weight: e.target.value })
               }
               placeholder='Weight'
-              className='border border-gray-300 p-2 rounded'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
           <button
             onClick={handleAddEdge}
-            className='bg-green-500 text-white px-4 py-2 rounded'
+            className='bg-green-500 text-white px-4 py-1 rounded w-full'
           >
             Ajouter une arête
           </button>
         </div>
 
         <div className='mb-2'>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formValues.id}
@@ -361,19 +361,19 @@ export default function Flow() {
                 setFormValues({ ...formValues, id: e.target.value })
               }
               placeholder='id'
-              className='border border-gray-300 p-2 rounded'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
           <button
             onClick={handleDeleteEdge}
-            className='bg-red-500 text-white px-4 py-2 rounded'
+            className='bg-red-500 text-white px-4 py-1 rounded w-full'
           >
             Supprimer une arête
           </button>
         </div>
 
         <div className='mb-2'>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formPath.server_name}
@@ -384,10 +384,10 @@ export default function Flow() {
                 })
               }
               placeholder='Source'
-              className='border border-gray-300 p-2 rounded'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
-          <div className='mb-1'>
+          <div className='mb-2'>
             <input
               type='text'
               value={formPath.target_value}
@@ -398,22 +398,30 @@ export default function Flow() {
                 })
               }
               placeholder='Target domain'
-              className='border border-gray-300 p-2 rounded'
+              className='border border-gray-300 rounded w-full'
             />
           </div>
           <button
             onClick={handleFindPath}
-            className='bg-blue-600 text-white px-4 py-2 rounded'
+            className='bg-blue-600 text-white px-4 py-1 rounded w-full'
           >
-            Simulate
+            Simuler chemin
           </button>
         </div>
         <div className='mb-2'>
           <button
             onClick={handleGetNode}
-            className=' bg-yellow-500 text-white px-4 py-2 rounded'
+            className=' bg-yellow-500 text-white px-4 py-1 rounded w-full'
           >
             Get all nodes
+          </button>
+        </div>
+        <div className='mb-2'>
+          <button
+            onClick={handleGetNode}
+            className=' bg-green-500 text-white px-4 py-1 rounded w-full'
+          >
+            Simuler socket
           </button>
         </div>
       </div>
