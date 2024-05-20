@@ -8,6 +8,7 @@ import ReactFlow, {
   addEdge,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
+import { io } from 'socket.io-client'
 // import CustomEdge from './CustomEdge'
 
 let initialNodes = []
@@ -17,6 +18,10 @@ export default function Flow() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes)
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges)
   const [path, setPath] = useState([])
+  const [fileContent, setFileContent] = useState('')
+  const [socket, setSocket] = useState(null)
+  const [isRequestSend, setIsRequestSend] = useState(false)
+  const [isRequestGet, setIsRequestGet] = useState(false)
 
   initialEdges = edges
   initialNodes = nodes
@@ -104,7 +109,7 @@ export default function Flow() {
           x: (100 * nodes.length) % 500,
           y: (100 * nodes.length) % 300,
         },
-        data: { label: formValues.label },
+        data: { label: formValues.label, isSend: false, isReceive: false },
         width: 0,
         height: 0,
       })
@@ -145,6 +150,7 @@ export default function Flow() {
     const data = await response.json()
     console.log(data)
     setPath(data.result)
+    setFileContent(target_value + '.txt')
   }
 
   const handleFindPath = () => {
@@ -217,6 +223,12 @@ export default function Flow() {
   }
 
   const getColor = (name) => {
+    if (name.data.isSend) {
+      return 'blue'
+    }
+    if (name.data.isReceive) {
+      return 'yellow'
+    }
     if (path.includes(name.data.label)) {
       return 'green'
     }
@@ -237,6 +249,84 @@ export default function Flow() {
   useEffect(() => {
     console.log('nodes updated', nodes)
   }, [nodes])
+
+  // Initialisation du socket client
+  useEffect(() => {
+    const newSocket = io('http://localhost:3000')
+    setSocket(newSocket)
+    return () => newSocket.disconnect()
+  }, [])
+
+  // Gestion de l'envoi du fichier via Socket.IO
+  const handleSendFile = () => {
+    if (socket) {
+      if (!isRequestSend) {
+        path.forEach((nodeName, index) => {
+          setTimeout(() => {
+            socket.emit('message', {
+              node: nodeName,
+              fileData: 'envoye du requette',
+            })
+            // socket.emit('file', fileContent)
+
+            setNodes((nds) =>
+              nds.map((node) => {
+                if (node.id === nodeName) {
+                  return {
+                    ...node,
+                    data: {
+                      ...node.data,
+                      isSend: true,
+                      isReceive: false,
+                    },
+                  }
+                }
+                return node
+              })
+            )
+          }, 2000 * index)
+        })
+        setIsRequestSend(!isRequestSend)
+        setIsRequestGet(!isRequestGet)
+      }
+
+      const reversePath = path.reverse()
+      if (isRequestGet) {
+        reversePath.forEach((nodeName, index) => {
+          setTimeout(() => {
+            // socket.emit('message', { node: nodeName, fileData: 'Contenu du fichier.txt' });
+            socket.emit('file', fileContent)
+
+            setNodes((nds) =>
+              nds.map((node) => {
+                if (node.id === nodeName) {
+                  return {
+                    ...node,
+                    data: {
+                      ...node.data,
+                      isReceive: true,
+                    },
+                  }
+                }
+                return node
+              })
+            )
+          }, 2000 * index)
+        })
+        setIsRequestGet(!isRequestGet)
+        setIsRequestSend(!isRequestSend)
+      }
+    }
+  }
+
+  // Fonction de réception du message du serveur Socket.IO
+  useEffect(() => {
+    if (socket) {
+      socket.on('file', (data) => {
+        console.log('Fichier reçu:', data)
+      })
+    }
+  }, [socket])
 
   // console.log('************************')
   // console.log(edges)
@@ -418,7 +508,7 @@ export default function Flow() {
         </div>
         <div className='mb-2'>
           <button
-            onClick={handleGetNode}
+            onClick={handleSendFile}
             className=' bg-green-500 text-white px-4 py-1 rounded w-full'
           >
             Simuler socket
