@@ -20,8 +20,8 @@ export default function Flow() {
   const [path, setPath] = useState([])
   const [fileContent, setFileContent] = useState('')
   const [socket, setSocket] = useState(null)
-  const [isRequestSend, setIsRequestSend] = useState(false)
-  const [isRequestGet, setIsRequestGet] = useState(false)
+  // const [isRequestSend, setIsRequestSend] = useState(false)
+  // const [isRequestGet, setIsRequestGet] = useState(false)
 
   initialEdges = edges
   initialNodes = nodes
@@ -223,11 +223,11 @@ export default function Flow() {
   }
 
   const getColor = (name) => {
+    if (name.data.isReceive) {
+      return 'gray'
+    }
     if (name.data.isSend) {
       return 'blue'
-    }
-    if (name.data.isReceive) {
-      return 'yellow'
     }
     if (path.includes(name.data.label)) {
       return 'green'
@@ -260,64 +260,66 @@ export default function Flow() {
   // Gestion de l'envoi du fichier via Socket.IO
   const handleSendFile = () => {
     if (socket) {
-      if (!isRequestSend) {
-        path.forEach((nodeName, index) => {
-          setTimeout(() => {
-            socket.emit('message', {
-              node: nodeName,
-              fileData: 'envoye du requette',
+      path.forEach((nodeName, index) => {
+        setTimeout(() => {
+          socket.emit('message', {
+            node: nodeName,
+            fileData: 'envoye du requette',
+          })
+          // socket.emit('file', fileContent)
+
+          setNodes((nds) =>
+            nds.map((node) => {
+              if (node.id === nodeName) {
+                return {
+                  ...node,
+                  data: {
+                    ...node.data,
+                    isSend: true,
+                  },
+                }
+              }
+              return node
             })
-            // socket.emit('file', fileContent)
+          )
 
-            setNodes((nds) =>
-              nds.map((node) => {
-                if (node.id === nodeName) {
-                  return {
-                    ...node,
-                    data: {
-                      ...node.data,
-                      isSend: true,
-                      isReceive: false,
-                    },
-                  }
-                }
-                return node
-              })
-            )
-          }, 2000 * index)
-        })
-        setIsRequestSend(!isRequestSend)
-        setIsRequestGet(!isRequestGet)
-      }
+          console.log(index == path.length - 1)
+          if (index == path.length - 1) {
+            const reversePath = path.reverse()
+            reversePath.forEach((nodeName1, index1) => {
+              setTimeout(() => {
+                // socket.emit('message', { node: nodeName, fileData: 'Contenu du fichier.txt' });
+                socket.emit('file', fileContent)
 
-      const reversePath = path.reverse()
-      if (isRequestGet) {
-        reversePath.forEach((nodeName, index) => {
-          setTimeout(() => {
-            // socket.emit('message', { node: nodeName, fileData: 'Contenu du fichier.txt' });
-            socket.emit('file', fileContent)
-
-            setNodes((nds) =>
-              nds.map((node) => {
-                if (node.id === nodeName) {
-                  return {
-                    ...node,
-                    data: {
-                      ...node.data,
-                      isReceive: true,
-                    },
-                  }
-                }
-                return node
-              })
-            )
-          }, 2000 * index)
-        })
-        setIsRequestGet(!isRequestGet)
-        setIsRequestSend(!isRequestSend)
-      }
+                setNodes((nds) =>
+                  nds.map((node) => {
+                    if (node.id === nodeName1) {
+                      return {
+                        ...node,
+                        data: {
+                          ...node.data,
+                          isReceive: true,
+                        },
+                      }
+                    }
+                    return node
+                  })
+                )
+              }, 2000 * index1)
+            })
+          }
+        }, 2000 * index)
+      })
     }
   }
+
+  // useEffect(() => {
+  //   console.log('request send')
+  // }, [isRequestSend])
+
+  // useEffect(() => {
+  //   console.log('request get')
+  // }, [isRequestSend])
 
   // Fonction de réception du message du serveur Socket.IO
   useEffect(() => {
