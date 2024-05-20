@@ -8,7 +8,7 @@ import ReactFlow, {
   addEdge,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
-import CustomEdge from './CustomEdge'
+// import CustomEdge from './CustomEdge'
 
 let initialNodes = []
 let initialEdges = []
@@ -245,157 +245,180 @@ export default function Flow() {
   // console.log('************************')
 
   return (
-    <div>
+    <div className='flex'>
       <div
-        className='w-full border-r border-gray-300 p-5 bg-blue-500'
+        className='border-r border-gray-300 p-2 flex-row'
         style={{ height: '20vh' }}
       >
-        <div className='mb-4'>
-          <input
-            type='text'
-            value={formValues.label}
-            onChange={(e) =>
-              setFormValues({
-                ...formValues,
-                label: e.target.value,
-                values: formValues.values,
-              })
-            }
-            placeholder='Label'
-            className='w-full border border-gray-300 p-2 mb-2 rounded'
-          />
-          <input
-            type='text'
-            value={formValues.values}
-            onChange={(e) =>
-              setFormValues({
-                ...formValues,
-                values: e.target.value,
-                label: formValues.label,
-              })
-            }
-            placeholder='Values'
-            className='w-full border border-gray-300 p-2 mb-2 rounded'
-          />
+        <div className='mb-2'>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formValues.label}
+              onChange={(e) =>
+                setFormValues({
+                  ...formValues,
+                  label: e.target.value,
+                  values: formValues.values,
+                })
+              }
+              placeholder='Label'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formValues.values}
+              onChange={(e) =>
+                setFormValues({
+                  ...formValues,
+                  values: e.target.value,
+                  label: formValues.label,
+                })
+              }
+              placeholder='Values'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
           <button
             onClick={handleAddNode}
-            className='bg-blue-500 text-white px-4 py-2 rounded mt-2'
+            type='button'
+            className='text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800'
           >
             Ajouter un nœud
           </button>
         </div>
-        <div className='mb-4'>
-          <input
-            type='text'
-            value={formValues.id}
-            onChange={(e) =>
-              setFormValues({ ...formValues, id: e.target.value })
-            }
-            placeholder='id'
-            className='w-full border border-gray-300 p-2 mb-2 rounded'
-          />
+
+        <div className='mb-2'>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formValues.id}
+              onChange={(e) =>
+                setFormValues({ ...formValues, id: e.target.value })
+              }
+              placeholder='id'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
           <button
             onClick={handleDeleteNode}
-            className='bg-red-500 text-white px-4 py-2 rounded mt-2'
+            className='bg-red-500 text-white px-4 py-2 rounded'
           >
             Supprimer un nœud
           </button>
         </div>
-        <div className='mb-4'>
-          <input
-            type='text'
-            value={formValues.source}
-            onChange={(e) =>
-              setFormValues({ ...formValues, source: e.target.value })
-            }
-            placeholder='Source'
-            className='w-full border border-gray-300 p-2 mb-2 rounded'
-          />
-          <input
-            type='text'
-            value={formValues.target}
-            onChange={(e) =>
-              setFormValues({ ...formValues, target: e.target.value })
-            }
-            placeholder='Target'
-            className='w-full border border-gray-300 p-2 mb-2 rounded mt-2'
-          />
-          <input
-            type='text'
-            value={formValues.weight}
-            onChange={(e) =>
-              setFormValues({ ...formValues, weight: e.target.value })
-            }
-            placeholder='Weight'
-            className='w-full border border-gray-300 p-2 mb-2 rounded mt-2'
-          />
+
+        <div className='mb-2'>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formValues.source}
+              onChange={(e) =>
+                setFormValues({ ...formValues, source: e.target.value })
+              }
+              placeholder='Source'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formValues.target}
+              onChange={(e) =>
+                setFormValues({ ...formValues, target: e.target.value })
+              }
+              placeholder='Target'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formValues.weight}
+              onChange={(e) =>
+                setFormValues({ ...formValues, weight: e.target.value })
+              }
+              placeholder='Weight'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
           <button
             onClick={handleAddEdge}
-            className='bg-green-500 text-white px-4 py-2 rounded mt-2'
+            className='bg-green-500 text-white px-4 py-2 rounded'
           >
             Ajouter une arête
           </button>
         </div>
-        <div className='mb-4'>
-          <input
-            type='text'
-            value={formValues.id}
-            onChange={(e) =>
-              setFormValues({ ...formValues, id: e.target.value })
-            }
-            placeholder='id'
-            className='w-full border border-gray-300 p-2 mb-2 rounded'
-          />
+
+        <div className='mb-2'>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formValues.id}
+              onChange={(e) =>
+                setFormValues({ ...formValues, id: e.target.value })
+              }
+              placeholder='id'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
           <button
             onClick={handleDeleteEdge}
-            className='bg-red-500 text-white px-4 py-2 rounded mt-2'
+            className='bg-red-500 text-white px-4 py-2 rounded'
           >
             Supprimer une arête
           </button>
         </div>
-        <div className='mb-4'>
-          <button
-            onClick={handleGetNode}
-            className='bg-red-500 text-white px-4 py-2 rounded mt-2'
-          >
-            get all nodes
-          </button>
-        </div>
-        <div className='mb-4'>
-          <input
-            type='text'
-            value={formPath.server_name}
-            onChange={(e) =>
-              setFormPath({
-                ...formPath,
-                server_name: e.target.value,
-              })
-            }
-            placeholder='source'
-            className='w-full border border-gray-300 p-2 mb-2 rounded'
-          />
-          <input
-            type='text'
-            value={formPath.target_value}
-            onChange={(e) =>
-              setFormPath({
-                ...formPath,
-                target_value: e.target.value,
-              })
-            }
-            placeholder='target domain'
-            className='w-full border border-gray-300 p-2 mb-2 rounded'
-          />
+
+        <div className='mb-2'>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formPath.server_name}
+              onChange={(e) =>
+                setFormPath({
+                  ...formPath,
+                  server_name: e.target.value,
+                })
+              }
+              placeholder='Source'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
+          <div className='mb-1'>
+            <input
+              type='text'
+              value={formPath.target_value}
+              onChange={(e) =>
+                setFormPath({
+                  ...formPath,
+                  target_value: e.target.value,
+                })
+              }
+              placeholder='Target domain'
+              className='border border-gray-300 p-2 rounded'
+            />
+          </div>
           <button
             onClick={handleFindPath}
-            className='bg-blue-500 text-white px-4 py-2 rounded mt-2'
+            className='bg-blue-600 text-white px-4 py-2 rounded'
           >
-            simulate
+            Simulate
+          </button>
+        </div>
+        <div className='mb-2'>
+          <button
+            onClick={handleGetNode}
+            className=' bg-yellow-500 text-white px-4 py-2 rounded'
+          >
+            Get all nodes
           </button>
         </div>
       </div>
 
-      <div className='main-app'>
+      <div className='main-app flex-grow'>
         <ReactFlow
           nodes={nodes.map((node) => ({
             ...node,
